@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 df = pd.read_csv("studentperformance/student_data.csv")
 print(df.head())
@@ -38,6 +39,11 @@ plt.xlabel("G3 Scores")
 plt.ylabel("Frequency")
 plt.show()
 
+#Add Seaborn Library for Enhanced Graph representation
+sns.histplot(df["G3"], bins = 10, color = "blue")
+plt.title("Distribution of G3 scores")
+plt.show()
+
 #Compare the Average fimal grade (G3) between male and female students
 print("Average Final Grade: ")
 print(df.groupby("sex")["G3"].mean())
@@ -46,6 +52,13 @@ print(df.groupby("sex")["G3"].mean())
 plt.bar(df.groupby("sex")["G3"].mean().index,df.groupby("sex")["G3"].mean().values,color=["red","green"])
 plt.title("Average Final Grade: ")
 plt.grid()
+plt.xlabel("Gender")
+plt.ylabel("Average G3 Score")
+plt.show()
+
+#Using the seaborn Library for the bar plot
+sns.barplot(x="sex",y="G3",data=df)
+plt.title("Average Final Grade")
 plt.xlabel("Gender")
 plt.ylabel("Average G3 Score")
 plt.show()
@@ -74,6 +87,15 @@ plt.grid()
 plt.xlabel("Absences")
 plt.ylabel("Final Grades")
 plt.show()
+
+#Using the Seaborn Library for the Scatter Plot
+sns.scatterplot(x="absences",y="G3",data=df,color = "red")
+plt.title("Relationship between Absence and Final Grades")
+plt.xlabel("Absences")
+plt.ylabel("Final Grades")
+plt.grid()
+plt.show()
+
 
 #Student with more absence perfom worse than fewer absences
 print("Average  G3 based on Absences:  ")
