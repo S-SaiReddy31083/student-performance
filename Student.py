@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import sklearn
 
 df = pd.read_csv("studentperformance/student_data.csv")
 print(df.head())
@@ -119,6 +120,47 @@ print(df["Average Grade"].head())
 #Checkning the performs better in student with internet or student with romantic relationships
 print("Average G3 based on Internet and Romantic Relationships: ")
 print(df.groupby(["internet","romantic"])["G3"].mean())
+
+#Predicting the Final Grades based on the other feature using the Linear Regression model
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+#Input features and output/target variable
+x = df[["Medu","Fedu","studytime","goout","absences"]]
+y = df["G3"]
+
+#Spliting the dataset into training and testing sets
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=42)
+
+#Creating the Linear Regression model
+model = LinearRegression()
+model.fit(x_train,y_train)
+
+#Making the Predictions
+y_pred = model.predict(x_test)
+print("Predicting Values: ",y_pred)
+
+#Checking the Mean Squared Error and R2 Score of the model
+from sklearn.metrics import mean_squared_error,r2_score,mean_absolute_error
+mse = mean_squared_error(y_test,y_pred)
+r2 = r2_score(y_test,y_pred)
+mae = mean_absolute_error(y_test,y_pred)
+print("Mean Absolute Error: ",mae)
+print("Mean Squared Error: ",mse)
+print("R2 Score: ",r2)
+
+#Graph Representation of Actual vs Predicted Values
+plt.scatter(y_test,y_pred,color="orange")
+plt.xlabel("Actual G3 Scores")
+plt.ylabel("Predicted G3 Scores")
+plt.title("Actual vs Predicted G3 Scores")
+plt.show()
+
+
+
+
+
+
+
 
 
 
