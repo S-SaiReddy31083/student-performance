@@ -155,6 +155,20 @@ plt.ylabel("Predicted G3 Scores")
 plt.title("Actual vs Predicted G3 Scores")
 plt.show()
 
+#Implementing the Confusion Matrix for the Final Grade Prediction
+from sklearn.metrics import confusion_matrix
+#Creating a new column for the grade category
+df["Grade Ctegory"] = pd.cut(df["G3"], bins=[-1,10,15,20],labels=["Low","Medium","High"])
+#Encoding the Grade Category
+from sklearn.preprocessing import LabelEncoder
+le = LabelEncoder()
+df["Grade Category encoder"] = le.fit_transform(df["Grade Category"])
+#Input features and target variable for classification
+x = df[["Medu","Fedu","studytime","goout","absences"]]
+y = df["Grade Category encoder"]
+#Splitting the dataset into training and testing sets
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=42)
+
 
 
 
