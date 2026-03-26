@@ -169,6 +169,25 @@ y = df["Grade Category encoder"]
 #Splitting the dataset into training and testing sets
 x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2,random_state=42)
 
+#Creating the Logistic Regression model
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression()
+model.fit(x_train,y_train)
+
+#Making the Predictions
+y_pred = model.predict(x_test)
+
+#Confusion Matrix
+cm = confusion_matrix(y_test,y_pred)
+print("Confusion Matrix: ",cm)
+
+#Graph for Confusion Matrix using the Seaborn Library
+sns.heatmap(cm, annot=True, fmt="d",cmap="Blues")
+plt.xlabel("Predicted Values")
+plt.ylabel("Actual Values")
+plt.title("Confusion Matrix")
+plt.show()
+
 
 
 
